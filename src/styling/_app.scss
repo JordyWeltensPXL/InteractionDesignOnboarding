@@ -197,3 +197,30 @@ span {
 .blur {
   filter: blur(8px);
 }
+
+.item2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15rem;
+  background-image: url("../assets/empty\ state2.jpg");
+  background-size: cover;
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  position: relative;
+  color: var(--color-text-dark);
+  font-size: var(--font-size-2xl);
+}
+
+.route-button {
+  background-color: var(--color-primary);
+  color: white;
+  justify-self: flex-end;
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
+}

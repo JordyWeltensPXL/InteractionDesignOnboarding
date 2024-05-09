@@ -51,7 +51,10 @@ function App() {
                 <ChecklistItem text={"Create a budget"}></ChecklistItem>
               </ul>
             </div>
-            <div className="grid-item item2">Recente routes</div>
+            <div className="grid-item item2">
+              You don't seem to have any routes yet.
+              <button className="button route-button">Add route</button>
+            </div>
             <div className="grid-item">Favorieten</div>
             <div className="grid-item"></div>
           </div>
