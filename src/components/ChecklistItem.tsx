@@ -4,7 +4,7 @@ export const ChecklistItem = ({ text }) => {
   return (
     <div className="checklist-item">
       <li>{text}</li>
-      <i className="fa-solid fa-check"></i>
+      <i className="fa-solid fa-close"></i>
     </div>
   );
 };

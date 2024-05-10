@@ -224,3 +224,46 @@ span {
     background-color: var(--color-primary-hover);
   }
 }
+
+.shepherd-button-secondary {
+  background-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
+}
+.shepherd-button-primary {
+  color: var(--color-primary) !important;
+  background-color: transparent !important;
+  padding-right: var(--spacing-xs);
+}
+
+.popover {
+  background-color: var(--color-white);
+  font-family: Work Sans;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+}
+
+.shepherd-header {
+  padding: 0.25rem 1rem !important;
+  background-color: var(--color-white) !important;
+  border-bottom: 1px solid var(--color-grey);
+}
+
+.shepherd-title {
+  color: var(--color-primary);
+}
+
+.shepherd-text {
+  padding-block: var(--spacing-sm);
+  padding-inline: var(--spacing-sm);
+}
+
+.shepherd-cancel-icon {
+  color: var(--color-primary) !important;
+}
+
+.shepherd-arrow:before {
+  background: var(--color-white) !important;
+}
+
+.fa-solid {
+  padding-right: var(--spacing-sm);
+}
