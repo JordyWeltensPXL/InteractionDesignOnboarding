@@ -5,6 +5,37 @@ import "shepherd.js/dist/css/shepherd.css";
 
 function App() {
   const [welcome, setWelcome] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [routes, setRoutes] = useState([]); // State to manage the list of routes
+  const [startPoint, setStartPoint] = useState("");
+  const [endPoint, setEndPoint] = useState("");
+
+  // Example checkpoints; replace with actual data
+  const checkpoints = [
+    "Sunrise Cove",
+    "Eagle's Nest Rock",
+    "Whispering Rapids",
+    "Serenity Bay",
+    "Maple Grove",
+    "Fisherman’s Point",
+    "Willow Bend",
+    "Riverside Falls",
+    "Hidden Lagoon",
+    "Paddler’s Haven",
+    "Heron’s Landing",
+    "Driftwood Cove",
+  ];
+
+  useEffect(() => {
+    const gridItems = document.querySelectorAll(".grid-item");
+    gridItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add("show");
+      }, index * 100); // Staggered effect
+    });
+
+    // Similarly, handle other elements
+  }, []);
 
   useEffect(() => {
     const containerDiv = document.querySelector(".container");
@@ -20,6 +51,37 @@ function App() {
   const handleClick = () => {
     setWelcome(false);
     tour.start();
+  };
+
+  const handleAddRouteClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveRoute = () => {
+    if (startPoint && endPoint) {
+      // Ensure that startPoint and endPoint are not the same
+      if (startPoint !== endPoint) {
+        // Add the new route to the list
+        setRoutes([...routes, { startPoint, endPoint }]);
+        setIsModalOpen(false);
+        setStartPoint(""); // Reset the start point
+        setEndPoint(""); // Reset the end point
+      } else {
+        alert("Start and End points cannot be the same.");
+      }
+    } else {
+      alert("Please select both a Start and End point.");
+    }
+  };
+
+  const handleRemoveRoute = (index) => {
+    // Create a new array without the route at the given index
+    const newRoutes = routes.filter((_, i) => i !== index);
+    setRoutes(newRoutes);
   };
 
   const tourOptions = {
@@ -172,9 +234,45 @@ function App() {
                 <ChecklistItem text={"Plan a kano trip"}></ChecklistItem>
               </ul>
             </div>
-            <div className="grid-item item2">
-              You don't seem to have any routes yet.
-              <button className="button route-button">Add route</button>
+            <div
+              className={`grid-item item2 ${
+                routes.length > 0 ? "has-routes" : ""
+              }`}
+            >
+              {routes.length === 0 ? (
+                <>
+                  <p>You don't seem to have any routes yet.</p>
+                  <button
+                    className="button route-button"
+                    onClick={handleAddRouteClick}
+                  >
+                    Add route
+                  </button>
+                </>
+              ) : (
+                <ul className="routes-list">
+                  {routes.map((route, index) => (
+                    <li key={index} className="route-card">
+                      <h3>
+                        from {route.startPoint} to {route.endPoint}
+                        <button
+                          className="remove-button"
+                          onClick={() => handleRemoveRoute(index)}
+                        >
+                          &times;{" "}
+                          {/* Unicode for multiplication sign, commonly used for 'x' */}
+                        </button>
+                      </h3>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <button
+                className="button route-button"
+                onClick={handleAddRouteClick}
+              >
+                Add route
+              </button>
             </div>
             <div className="grid-item">Favorieten</div>
             <div className="grid-item"></div>
@@ -195,6 +293,54 @@ function App() {
             Take a Quick Tour
           </button>
         </div>
+      )}
+      {isModalOpen && (
+        <>
+          <div className="modal-overlay"></div>
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Add a New Route</h2>
+              <div className="form-group">
+                <label htmlFor="startPoint">Starting Point:</label>
+                <select
+                  id="startPoint"
+                  value={startPoint}
+                  onChange={(e) => setStartPoint(e.target.value)}
+                >
+                  <option value="">Select Starting Point</option>
+                  {checkpoints.map((checkpoint, index) => (
+                    <option key={index} value={checkpoint}>
+                      {checkpoint}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="endPoint">Ending Point:</label>
+                <select
+                  id="endPoint"
+                  value={endPoint}
+                  onChange={(e) => setEndPoint(e.target.value)}
+                >
+                  <option value="">Select Ending Point</option>
+                  {checkpoints.map((checkpoint, index) => (
+                    <option key={index} value={checkpoint}>
+                      {checkpoint}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="modal-buttons">
+                <button onClick={handleSaveRoute} className="button">
+                  Save
+                </button>
+                <button onClick={handleCloseModal} className="button">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </>
   );
